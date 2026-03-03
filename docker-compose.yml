@@ -170,6 +170,10 @@ services:
 
   airflow-init:
     <<: *airflow-common
+    build:
+      context: .
+      dockerfile: airflow/Dockerfile
+    image: retail-airflow-custom:latest
     container_name: retail-airflow-init
     restart: "no"
     command: >
@@ -186,6 +190,10 @@ services:
 
   airflow-webserver:
     <<: *airflow-common
+    build:
+      context: .
+      dockerfile: airflow/Dockerfile
+    image: retail-airflow-custom:latest
     container_name: retail-airflow-webserver
     restart: unless-stopped
     depends_on:
@@ -197,6 +205,10 @@ services:
 
   airflow-scheduler:
     <<: *airflow-common
+    build:
+      context: .
+      dockerfile: airflow/Dockerfile
+    image: retail-airflow-custom:latest
     container_name: retail-airflow-scheduler
     restart: unless-stopped
     depends_on:
