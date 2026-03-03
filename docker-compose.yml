@@ -1,16 +1,12 @@
 name: retail-forecast
 
 x-airflow-common: &airflow-common
-  build:
-    context: .
-    dockerfile: airflow/Dockerfile
   image: retail-airflow-custom:latest
   environment:
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
 
-    # MLflow + MinIO (S3) accessibles depuis les DAGs
     MLFLOW_TRACKING_URI: http://mlflow:5000
     MLFLOW_EXPERIMENT_NAME: retail_forecast
     AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER:-minioadmin}
