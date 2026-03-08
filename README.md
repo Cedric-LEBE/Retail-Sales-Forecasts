@@ -156,7 +156,6 @@ cp .env.example .env
 - **GROQ_API_KEY =** "gsk_..."
 - **GROQ_MODEL =** "..."
 - **ANALYTICS_DATABASE_URL =** "..."
-- **STREAMLIT_PORT :** 8501
 
 ### Installation
 
