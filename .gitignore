@@ -9,8 +9,8 @@ __pycache__/
 
 # --- Virtualenvs ---
 .env
-.env.*
-*.env
+/venv
+.venv
 
 
 # --- Packaging / build ---
@@ -24,8 +24,9 @@ dist/
 .idea/
 .DS_Store
 
-# --- Streamlit ---
-.streamlit/secrets.toml
 
 # --- Logs ---
 *.log
+
+# --- Nginx ---
+nginx/auth/.htpasswd

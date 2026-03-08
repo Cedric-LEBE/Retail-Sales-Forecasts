@@ -1,12 +1,13 @@
 apiVersion: 1
 
 providers:
-  - name: "Retail Dashboards"
+  - name: "Retail"
     orgId: 1
     folder: "Retail"
     type: file
     disableDeletion: false
     editable: true
+    updateIntervalSeconds: 10
     options:
       path: /etc/grafana/dashboards
-      foldersFromFilesStructure: true
+      foldersFromFilesStructure: false

@@ -1,125 +1,54 @@
-# 🛒 Prévision des Ventes E-commerce
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
+![Python](https://img.shields.io/badge/Python-3.11-green)
+![MLflow](https://img.shields.io/badge/MLflow-MLOps-orange)
+![Airflow](https://img.shields.io/badge/Airflow-Orchestration-red)
+![Grafana](https://img.shields.io/badge/Grafana-Monitoring-yellow)
 
-## 📋 Description
+# 🛒 Retail Sales Forecast Platform
 
-Application interactive de prévision des ventes e-commerce basée sur l'apprentissage automatique et l'analyse de séries temporelles. Ce projet permet d'anticiper les ventes futures en exploitant des données transactionnelles historiques complexes pour optimiser la gestion des stocks, la planification logistique et les stratégies marketing.
+Plateforme de prévision des ventes e-commerce de bout en bout intégrant pipelines data et modèles de séries temporelles, orchestrés avec Airflow, suivis via MLflow, stockés sur S3 (MinIO), exposés via une application Streamlit et supervisés avec Prometheus et Grafana.
+
+---
+
+## 📝 Contexte Métier
+
+Dans un contexte e-commerce, la capacité à anticiper les ventes futures est un levier stratégique majeur pour :
+
+1. Optimiser la gestion des stocks
+2. Améliorer la planification logistique
+3. Ajuster les stratégies marketing et promotionnelles
+4. Maximiser le chiffre d'affaires tout en réduisant les coûts opérationnels
+
+Les ventes e-commerce sont influencées par de nombreux facteurs : saisonnalité, comportements clients, types de produits, modes de paiement, localisation géographique, et conditions de livraison.
+
+---
 
 ## 🎯 Objectifs
 
-L'objectif principal est de concevoir une application interactive permettant de :
+L'objectif du projet est de concevoir une plateforme complète de prévision des ventes e-commerce permettant de :
 
-1. **Prédire les ventes futures** sur différentes granularités temporelles (journalière, mensuelle)
-2. **Fournir des indicateurs clairs** et interprétables pour la prise de décision
-3. **Rendre les résultats accessibles** via une application interactive Streamlit
+1. **Automatiser les pipelines data et machine learning** pour la préparation des données et l'entraînement des modèles de séries temporelles
+2. **Prédire les ventes futures** à différentes granularités temporelles (journalière, hebdomadaire, mensuelle)
+3. **Suivre et gérer les expériences des modèles** grâce à MLflow (tracking, modèles et artefacts)
+4. **Fournir des indicateurs clairs et interprétables** pour faciliter la prise de décision métier
+5. **Rendre les résultats accessibles via une application interactive** développée avec Streamlit
+6. **Superviser l'infrastructure et les pipelines** grâce à une stack de monitoring Prometheus et Grafana
 
-### Objectifs détaillés
+---
 
-#### 1️⃣ Compréhension et préparation des données
-- Explorer et comprendre les différentes tables du dataset e-commerce
-- Analyser la qualité des données (valeurs manquantes, incohérences, distributions)
-- Fusionner les tables pertinentes pour construire des datasets analytiques cohérents
+## 🔎 Vue D'ensemble
 
-#### 2️⃣ Analyse Exploratoire des Données (EDA)
-- Étudier l'évolution des ventes dans le temps
-- Identifier les tendances, saisonnalités et cycles récurrents
-- Analyser les ventes par type de produit, région géographique, mode de paiement
-- Mettre en évidence les corrélations entre variables
+Le projet couvre toute la chaîne de valeur :
 
-#### 3️⃣ Feature Engineering orienté séries temporelles
-- Créer des variables temporelles pertinentes (jour, mois, trimestre, année)
-- Générer des features de séries temporelles (lag features, moyennes glissantes)
-- Construire des variables métier utiles à la prévision
+- Ingestion et préparation des données transactionnelles e-commerce
+- Entraînement de modèles ML globaux et régionaux
+- Entraînement de modèles time series par région
+- Serving interactif via Streamlit (dashboard + prévision + chatbot data)
+- Orchestration des workflows avec Airflow
+- Tracking des expériences et artefacts avec MLflow + S3 (MinIO)
+- Observabilité système et applicative avec Prometheus + Grafana
 
-#### 4️⃣ Modélisation et prévision des ventes
-- Modèles de Machine Learning : Régression, Random Forest, XGBoost, SARIMAX, Prophet, Holt-Winters
-- Évaluation avec métriques adaptées (MAE, RMSE, MAPE)
-
-#### 5️⃣ Restitution et déploiement
-- Concevoir des visualisations interactives
-- Déployer via une application Streamlit avec filtres dynamiques
-- Intrégrer un Chatbot permettant aux utilisateurs de discuter avec les données. 
-
-## 📊 Dataset
-
-Le projet utilise des données e-commerce multi-tables incluant :
-
-- **df_Orders.csv** - Commandes avec statuts et dates
-- **df_OrderItems.csv** - Détails des articles commandés
-- **df_Customers.csv** - Informations clients
-- **df_Payments.csv** - Modes et montants de paiement
-- **df_Products.csv** - Catalogue de produits
-
-Les données sont organisées en deux ensembles :
-- `data/raw/` - Données brutes
-- `data/interim/` - Données prétraiter (fusion/clean/features)
-- `data/processed/` - Données final prêt pour l'entrainement
-
-## 🚀 Installation
-
-### Prérequis
-
-- Python 3.10 à 3.12
-- pip ou uv pour la gestion des dépendances
-
-### Installation des dépendances
-
-```bash
-# Cloner le repository
-git remote add origin https://github.com/Cedric-LEBE/Fil-Rouge-Sales-Forecast.git
-cd Fil-Rouge-Sales-Forecast
-
-# Créer un environnement virtuel
-python3 -m venv .venv
-
-# Activer l'environnement virtuel
-# Sur Linux/Mac:
-source .venv/bin/activate
-# Sur Windows:
-.venv\Scripts\activate
-
-# Installer les dépendances
-pip install -e ".[prophet]" 
-```
-### Workflow (Quickstart)
-```
-# 1) Préparer le dataset & entrainer le model 
-
-python scripts/make_dataset.py
-python scripts/train_ml_global.py
-python scripts/train_ml_region.py
-python scripts/train_ts_region.py
-
-# 2) Lancer l'application streamlit
-
-streamlit run app/app.py
-```
-
-## 📁 Structure du Projet
-
-```
-Fil-Rouge-Sales-Forecast/
-├── app/
-│   └── app.py                 # Streamlit (Dashboard + Prévisions + Chatbot placeholder)
-├── artefacts
-│   └── runs_ml/
-│   └── runs_ts/
-├── scripts/
-│   └── benchmark.py           # Lance un benchmark d'entraînement (leaderboard + best model)
-├── data/
-│   ├── raw/                   # Données sources (CSV)
-│   ├── interim/               # Données intermédiaires (parquet) 
-│   └── interim/               # Données prête pour le ML (parquet) 
-├── model_store/
-│   └── latest/                # Pointeur/artefacts du dernier run
-│   └── runs/
-├── fil_rouge/                 # Package Python (config, io, train, etc.)
-├── reports/
-├── scripts/
-├── pyproject.toml
-├── requirements.txt           # Dependances pour le déploiement streamlit
-├── Readme.md
-└── .gitignore
-```
+---
 
 ## 🛠️ Technologies Utilisées
 
@@ -135,46 +64,180 @@ Fil-Rouge-Sales-Forecast/
 ### Machine Learning
 - **scikit-learn** (v1.5.0) - Modèles ML classiques
 - **xgboost** - Gradient boosting
-- **statsmodels** - Modèles statistiques (SARIMAX)
-- **prophet** - Prévisions de séries temporelles 
-- **Holt-Winters** - Prévisions de séries temporelles 
+- **statsmodels** - Modèles statistiques (SARIMAX) et Holt-Winters
+- **prophet** - Prévisions de séries temporelles
 
-### Déploiement
-- **streamlit** - Application web interactive
-- **python-dotenv** - Gestion de configuration
+### LLM
+
+- **LLM inference :** Groq API
+- **LLM model :** LLaMA 3.3 70B
+- **RAG orchestration :** Python
+- **Prompt engineering :** contextual prompts + data summaries
+- **Data source :** PostgreSQL analytics database
 
 ### Utilitaires
 - **joblib** - Sérialisation de modèles
+- **python-dotenv** - Gestion des variables d'environnement
 
-## 🎯 Fonctionnalités actuelles de l'app
+### Core Services
+- **Streamlit** - Interface utilisateur
+- **Airflow** - Orchestration des pipelines data
+- **MLflow** - Suivi des expériences et registre des modèles
+- **S3 (MinIO)** - Stockage des artefacts
+- **Prometheus + Grafana** - Monitoring
+- **Nginx** - Reverse proxy et terminaison HTTPS
+- **Let's Encrypt & Certbot** - Génération et renouvellement automatique des certificats SSL
 
-### Pages Streamlit
+### Data and Metadata Layer
+- **PostgreSQL (analytics DB)** - Stocke les données prêtes à être analysées
+- **PostgreSQL (Airflow metadata DB)** - Stocke les exécutions DAG, états des tâches et métadonnées du scheduler
+- **PostgreSQL (MLflow backend DB)** - Stocke les métadonnées des expériences, exécutions et informations de suivi
 
-- **📊 Dashboard** : KPIs, ventes au fil du temps, régions, catégories, paiements, clients
-- **🔮 Prévision** : prévision des ventes (globale/région)
-- **💬 Chatbot** : front-end uniquement (placeholder), backend à brancher plus tard (Text-to-SQL/RAG)
+### Monitoring Layer
+- **node-exporter** - Métriques au niveau du VPS / hôte
+- **cAdvisor** - Métriques des conteneurs Docker
+- **postgres-exporter** - Métriques PostgreSQL
+- **Prometheus** - Collecte des métriques
+- **Grafana** - Tableaux de bord et visualisation
 
-### En développement
-- 🚧 Developpement du backend du Chatbot (Chat with data)
-
-## 🌐 Déploiement
-
-L’application est actuellement déployée en version bêta et accessible en ligne.
-
-URL de l’application (beta) :
-
-🔗 https://sales-forecasts.streamlit.app/
-
-## 📝 Contexte Métier
-
-Dans un contexte e-commerce, la capacité à anticiper les ventes futures est un levier stratégique majeur pour :
-1. Optimiser la gestion des stocks
-2. Améliorer la planification logistique
-3. Ajuster les stratégies marketing et promotionnelles
-4. Maximiser le chiffre d'affaires tout en réduisant les coûts opérationnels
-
-Les ventes e-commerce sont influencées par de nombreux facteurs : saisonnalité, comportements clients, types de produits, modes de paiement, localisation géographique, et conditions de livraison.
+### Infrastructure Layer
+- **Docker Compose** - Orchestration des services
+- **OVHcloud VPS** - Infrastructure cloud hébergeant la plateforme
+- **Nginx** - Point d'entrée public et terminaison HTTPS
+- **Let's Encrypt & Certbot** - Génération et renouvellement automatique des certificats SSL
 
 ---
 
-**Note** : Ce projet est en cours de développement. Certaines fonctionnalités sont encore en phase d'implémentation.
+## Architecture Diagram
+
+![architecture](architecture/architecture-diagram.png)
+
+---
+
+## 💡 Fonctionnalités Applicatives (Streamlit)
+
+- **📊 Dashboard** - KPIs, courbes temporelles, analyses région / catégorie / paiement / client
+- **🔮 Prévision** - Forecast global et par région
+- **💬 Chatbot** - Interface conversationnelle pour interroger les données de manière analytique et prévisionnelle
+
+---
+
+## 📊 Dataset
+
+**Jeux de données sources (`data/raw/`) :**
+- **df_Orders.csv** - Commandes avec statuts et dates
+- **df_OrderItems.csv** - Détails des articles commandés
+- **df_Customers.csv** - Informations clients
+- **df_Payments.csv** - Modes et montants de paiement
+- **df_Products.csv** - Catalogue de produits
+
+**Zones de travail :**
+- **data/raw/** - Données brutes
+- **data/interim/** - Données nettoyées / fusionnées / features intermédiaires
+- **data/processed/** - Données prêtes pour l'entraînement
+
+---
+
+## 🚀 Installation Locale
+
+### Prérequis
+
+- Python 3.10 à 3.12
+- pip ou uv pour la gestion des dépendances
+
+### Installation
+
+```bash
+# Cloner le repository
+git remote add origin https://github.com/Cedric-LEBE/Fil-Rouge-Sales-Forecast.git
+cd Fil-Rouge-Sales-Forecast
+
+# Créer et activer un environnement virtuel
+python3 -m venv .venv
+
+# Sur Linux/Mac :
+source .venv/bin/activate
+
+# Sur Windows :
+.venv\Scripts\activate
+
+# Installer les dépendances
+pip install -e ".[prophet]"
+
+# Lancer l'application Streamlit
+python scripts/run_all.py
+python scripts/sanity_check.py
+streamlit run app/app.py
+
+# Lancement de la stack complète
+docker compose up -d --build
+```
+
+---
+
+## 📁 Structure Du Projet
+
+```text
+.
+|-- airflow/
+|-- app/
+|-- data/
+|-- fil_rouge/
+|-- mlflow/
+|-- minio/
+|-- monitoring/
+|-- nginx/
+|-- scripts/
+|-- docker-compose.yml
+|-- pyproject.toml
+`-- README.md
+```
+
+---
+
+## 🖇 Scripts Utiles
+
+- **scripts/make_dataset.py** - Préparation des données
+- **scripts/train_ml_global.py** - Entraînement modèle global
+- **scripts/train_ml_region.py** - Entraînement modèle régional
+- **scripts/train_ts_region.py** - Entraînement TS par région
+- **scripts/run_all.py** - Pipeline complet data + ML + TS
+- **scripts/sanity_check.py** - Vérification des artefacts minimaux
+- **scripts/load_analytics_db.py** - Chargement de la base analytique
+
+---
+
+## 🌐 Accès Déploiement
+
+| Service | URL |
+|---|---|
+| Application principale |🔗 https://retail.sales-forecasts.com |
+| Airflow |🔗 https://retail.sales-forecasts.com/airflow/ |
+| MLflow |🔗 https://retail.sales-forecasts.com/mlflow/ |
+| MinIO Console |🔗 https://minio.sales-forecasts.com |
+| Prometheus |🔗 https://retail.sales-forecasts.com/prometheus/ |
+| Grafana |🔗 https://retail.sales-forecasts.com/grafana/ |
+
+**Identifiants par défaut** (services web, hors Streamlit) :
+- **User :** `guest`
+- **Password :** `Guest2026!`
+
+> **Note :** MLflow et Prometheus sont protégés par authentification HTTP Basic via Nginx. Tous les services exposés en public sont en HTTPS avec certificats TLS Let's Encrypt (Certbot).
+
+---
+
+## 📦 Stack
+
+- **Programming & ML :** Python (pandas, numpy, scikit-learn, xgboost, statsmodels, prophet, Holt-Winters)
+- **Configuration management :** python-dotenv
+- **Serialization :** joblib
+- **LLM inference :** Groq API
+- **LLM model :** LLaMA 3.3 70B
+- **App Layer :** Streamlit
+- **Orchestration :** Apache Airflow
+- **Experiment Tracking :** MLflow
+- **Object Storage :** MinIO (S3-compatible)
+- **Databases :** PostgreSQL
+- **Monitoring :** Prometheus, Grafana, node-exporter, cAdvisor, postgres-exporter
+- **Infrastructure :** Docker, Docker Compose, Nginx
+- **Security :** HTTPS, Basic Auth

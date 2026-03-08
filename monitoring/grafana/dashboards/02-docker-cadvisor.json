@@ -1,0 +1,130 @@
+{
+  "uid": "retail-docker",
+  "title": "Retail • Docker Containers Overview",
+  "tags": ["retail", "docker", "cadvisor"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 9,
+  "refresh": "10s",
+  "time": { "from": "now-6h", "to": "now" },
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "CPU usage by container",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 8 },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "cores"
+        }
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "legendFormat": "retail-streamlit",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{id=~\".*/docker-32fd070da0bc.*\"}[2m]))"
+        },
+        {
+          "refId": "B",
+          "legendFormat": "retail-mlflow",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{id=~\".*/docker-4b21403f71c1.*\"}[2m]))"
+        },
+        {
+          "refId": "C",
+          "legendFormat": "retail-airflow-webserver",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{id=~\".*/docker-37c2826f2684.*\"}[2m]))"
+        },
+        {
+          "refId": "D",
+          "legendFormat": "retail-airflow-scheduler",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{id=~\".*/docker-4defafada9a5.*\"}[2m]))"
+        },
+        {
+          "refId": "E",
+          "legendFormat": "retail-prometheus",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{id=~\".*/docker-f1469396829d.*\"}[2m]))"
+        },
+        {
+          "refId": "F",
+          "legendFormat": "retail-grafana",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{id=~\".*/docker-d7407e7e2cbc.*\"}[2m]))"
+        },
+        {
+          "refId": "G",
+          "legendFormat": "retail-nginx",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{id=~\".*/docker-60248ad8548e.*\"}[2m]))"
+        },
+        {
+          "refId": "H",
+          "legendFormat": "retail-minio",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{id=~\".*/docker-8299bfc8026f.*\"}[2m]))"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Memory usage by container",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 0, "y": 8, "w": 24, "h": 8 },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        }
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom"
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "legendFormat": "retail-streamlit",
+          "expr": "sum(container_memory_usage_bytes{id=~\".*/docker-32fd070da0bc.*\"})"
+        },
+        {
+          "refId": "B",
+          "legendFormat": "retail-mlflow",
+          "expr": "sum(container_memory_usage_bytes{id=~\".*/docker-4b21403f71c1.*\"})"
+        },
+        {
+          "refId": "C",
+          "legendFormat": "retail-airflow-webserver",
+          "expr": "sum(container_memory_usage_bytes{id=~\".*/docker-37c2826f2684.*\"})"
+        },
+        {
+          "refId": "D",
+          "legendFormat": "retail-airflow-scheduler",
+          "expr": "sum(container_memory_usage_bytes{id=~\".*/docker-4defafada9a5.*\"})"
+        },
+        {
+          "refId": "E",
+          "legendFormat": "retail-prometheus",
+          "expr": "sum(container_memory_usage_bytes{id=~\".*/docker-f1469396829d.*\"})"
+        },
+        {
+          "refId": "F",
+          "legendFormat": "retail-grafana",
+          "expr": "sum(container_memory_usage_bytes{id=~\".*/docker-d7407e7e2cbc.*\"})"
+        },
+        {
+          "refId": "G",
+          "legendFormat": "retail-nginx",
+          "expr": "sum(container_memory_usage_bytes{id=~\".*/docker-60248ad8548e.*\"})"
+        },
+        {
+          "refId": "H",
+          "legendFormat": "retail-minio",
+          "expr": "sum(container_memory_usage_bytes{id=~\".*/docker-8299bfc8026f.*\"})"
+        }
+      ]
+    }
+  ]
+}

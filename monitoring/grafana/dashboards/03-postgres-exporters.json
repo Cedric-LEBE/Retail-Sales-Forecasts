@@ -1,0 +1,84 @@
+{
+  "uid": "retail-pg",
+  "title": "Retail • Postgres (analytics / airflow / mlflow)",
+  "tags": ["retail", "postgres", "exporter"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "10s",
+  "time": { "from": "now-6h", "to": "now" },
+  "templating": {
+    "list": [
+      {
+        "name": "job",
+        "type": "custom",
+        "query": "postgres-analytics,postgres-airflow,postgres-mlflow",
+        "multi": true,
+        "includeAll": true,
+        "allValue": ".*"
+      }
+    ]
+  },
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Exporter UP",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 0, "y": 0, "w": 8, "h": 7 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "up{job=~\"$job\"}"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Connections (numbackends)",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 8, "y": 0, "w": 8, "h": 7 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by(job) (pg_stat_database_numbackends{job=~\"$job\"})"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Transactions commit/s",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 16, "y": 0, "w": 8, "h": 7 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by(job) (rate(pg_stat_database_xact_commit{job=~\"$job\"}[2m]))"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Blocks read time (ms/s)",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 0, "y": 7, "w": 12, "h": 8 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by(job) (rate(pg_stat_database_blk_read_time{job=~\"$job\"}[2m]))"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Blocks write time (ms/s)",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 12, "y": 7, "w": 12, "h": 8 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by(job) (rate(pg_stat_database_blk_write_time{job=~\"$job\"}[2m]))"
+        }
+      ]
+    }
+  ]
+}

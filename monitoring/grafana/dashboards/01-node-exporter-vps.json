@@ -1,0 +1,72 @@
+{
+  "uid": "retail-node",
+  "title": "Retail • VPS (node-exporter)",
+  "tags": ["retail", "node-exporter"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "10s",
+  "time": { "from": "now-6h", "to": "now" },
+  "templating": {
+    "list": [
+      {
+        "name": "instance",
+        "type": "query",
+        "datasource": "Prometheus",
+        "query": "label_values(up{job=\"node-exporter\"}, instance)",
+        "refresh": 1,
+        "multi": false,
+        "includeAll": false
+      }
+    ]
+  },
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "CPU usage (%)",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "100 - (avg by(instance) (rate(node_cpu_seconds_total{mode=\"idle\",job=\"node-exporter\",instance=~\"$instance\"}[2m])) * 100)"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Load (1m / 5m / 15m)",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 },
+      "targets": [
+        { "refId": "A", "expr": "node_load1{job=\"node-exporter\",instance=~\"$instance\"}" },
+        { "refId": "B", "expr": "node_load5{job=\"node-exporter\",instance=~\"$instance\"}" },
+        { "refId": "C", "expr": "node_load15{job=\"node-exporter\",instance=~\"$instance\"}" }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Memory used (%)",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 0, "y": 8, "w": 12, "h": 8 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "100 * (1 - (node_memory_MemAvailable_bytes{job=\"node-exporter\",instance=~\"$instance\"} / node_memory_MemTotal_bytes{job=\"node-exporter\",instance=~\"$instance\"}))"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Disk free (%) (/) ",
+      "datasource": "Prometheus",
+      "gridPos": { "x": 12, "y": 8, "w": 12, "h": 8 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "100 * (node_filesystem_avail_bytes{job=\"node-exporter\",instance=~\"$instance\",mountpoint=\"/\"} / node_filesystem_size_bytes{job=\"node-exporter\",instance=~\"$instance\",mountpoint=\"/\"})"
+        }
+      ]
+    }
+  ]
+}
