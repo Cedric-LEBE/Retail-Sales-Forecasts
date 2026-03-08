@@ -145,12 +145,25 @@ Le projet couvre toute la chaîne de valeur :
 - Python 3.10 à 3.12
 - pip ou uv pour la gestion des dépendances
 
+### Configuration des variables d'environnement
+
+Copiez le fichier **.env.example** vers **.env** et renseignez les valeurs :
+
+```bash
+cp .env.example .env
+```
+
+- **GROQ_API_KEY =** "gsk_..."
+- **GROQ_MODEL =** "..."
+- **ANALYTICS_DATABASE_URL =** "..."
+- **STREAMLIT_PORT :** 8501
+
 ### Installation
 
 ```bash
 # Cloner le repository
-git remote add origin https://github.com/Cedric-LEBE/Fil-Rouge-Sales-Forecast.git
-cd Fil-Rouge-Sales-Forecast
+git remote add origin https://github.com/Cedric-LEBE/Retail-Sales-Forecasts.git
+cd Retail-Sales-Forecasts
 
 # Créer et activer un environnement virtuel
 python3 -m venv .venv
