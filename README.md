@@ -65,7 +65,7 @@ Le projet couvre toute la chaîne de valeur :
 
 ### Machine Learning
 - **scikit-learn** (v1.5.0) - Modèles ML classiques
-- **Histogram Gradient Boosting ** - Histogram Gradient Boosting 
+- **Histogram Gradient Boosting** - Histogram Gradient Boosting 
 - **statsmodels** - Modèles statistiques (SARIMAX) et Holt-Winters
 - **prophet** - Prévisions de séries temporelles
 
