@@ -113,6 +113,7 @@ Le projet couvre toute la chaîne de valeur :
 ## Architecture Diagram
 
 ![complete_architecture](screenshoots/20_complete_architecture.png)
+
 ![chatbot_architecture](screenshoots/19_chatbot_architecture.png)
 
 ---
