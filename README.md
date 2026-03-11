@@ -230,7 +230,6 @@ docker compose up -d --build
 | Application principale |🔗 https://retail.sales-forecasts.com |
 | Airflow |🔗 https://retail.sales-forecasts.com/airflow/ |
 | MLflow |🔗 https://retail.sales-forecasts.com/mlflow/ |
-| MinIO Console |🔗 https://minio.sales-forecasts.com |
 | Prometheus |🔗 https://retail.sales-forecasts.com/prometheus/ |
 | Grafana |🔗 https://retail.sales-forecasts.com/grafana/ |
 
