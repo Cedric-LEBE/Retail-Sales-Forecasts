@@ -2,6 +2,7 @@
 ![Python](https://img.shields.io/badge/Python-3.11-green)
 ![MLflow](https://img.shields.io/badge/MLflow-MLOps-orange)
 ![Airflow](https://img.shields.io/badge/Data-Ops-brown)
+![Airflow](https://img.shields.io/badge/Dev-Ops-purple)
 ![Airflow](https://img.shields.io/badge/Data-Engineering-blue)
 ![Airflow](https://img.shields.io/badge/Airflow-Orchestration-red)
 ![Grafana](https://img.shields.io/badge/Grafana-Monitoring-yellow)
