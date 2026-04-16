@@ -7,18 +7,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
   && rm -rf /var/lib/apt/lists/*
 
-# Installer les dépendances runtime (évite le problème resolution-too-deep)
 COPY requirements.app.txt /app/requirements.app.txt
 RUN pip install --no-cache-dir -U pip \
  && pip install --no-cache-dir -r /app/requirements.app.txt
 
-# Copier le code
 COPY pyproject.toml /app/pyproject.toml
 COPY fil_rouge /app/fil_rouge
 COPY app /app/app
 COPY scripts /app/scripts
 
-# Installer ton package sans résoudre les dépendances à nouveau
 RUN pip install --no-cache-dir --no-deps .
 
 EXPOSE 8501
